@@ -83,7 +83,7 @@ def fast_last(session='gui_ssh'):
         event = {}
         if (e.ut_type == USER_PROCESS) or (e.ut_type == DEAD_PROCESS):
             # filter out system account _mdsetupuser
-            if (e.ut_user == "_mbsetupuser"):
+            if (e.ut_user == "_mbsetupuser" or e.ut_user == "root"):
                 continue
             else:
                 event = {'user': e.ut_user}
