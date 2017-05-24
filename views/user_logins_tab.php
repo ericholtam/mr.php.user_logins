@@ -20,7 +20,7 @@
         // Initialize datatables
             $('.user_logins').dataTable({
                 "bServerSide": false,
-                "aaSorting": [[3,'asc']]
+                "aaSorting": [[0,'asc']]
             });
   });
 </script>
