@@ -1,4 +1,7 @@
 <?php
+
+use CFPropertyList\CFPropertyList;
+
 class User_logins_model extends Model {
 
 	function __construct($serial='')
@@ -34,7 +37,6 @@ class User_logins_model extends Model {
 			throw new Exception("Error Processing Request: No property list found", 1);
 		}
 		
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();
