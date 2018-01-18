@@ -1,21 +1,16 @@
 <?php
-class User_logins_model extends Model {
 
-	function __construct($serial='')
+use CFPropertyList\CFPropertyList;
+
+class User_logins_model extends \Model 
+{
+
+	public function __construct($serial='')
 	{
 		parent::__construct('id', 'user_logins'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial;
 		$this->rs['user'] = '';
-
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
-
-		// Add indexes
-		$this->idx[] = array('user');
-        
-		// Create table if it does not exist
-		$this->create_table();
 
 		$this->serial_number = $serial;
 	}
@@ -28,16 +23,15 @@ class User_logins_model extends Model {
 	 * @param string data
 	 * @author tuxudo
 	 **/
-	function process($plist)
+	public function process($plist)
 	{
 		if ( ! $plist){
 			throw new Exception("Error Processing Request: No property list found", 1);
 		}
 		
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
-		$myList = $parser->toArray();
+		$myList = array_change_key_case($parser->toArray(), CASE_LOWER);
         		
 		$typeList = array(
 			'user' => '',
