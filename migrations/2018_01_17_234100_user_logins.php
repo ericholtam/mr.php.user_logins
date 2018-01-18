@@ -3,7 +3,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class User_logins extends Migration
+class Userlogins extends Migration
 {
     private $tableName = 'user_logins';
     private $tableNameV2 = 'user_logins_orig';
@@ -25,8 +25,8 @@ class User_logins extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
-            $table->string('user');
+            $table->string('serial_number')->nullable();
+            $table->string('user')->nullable();
 
             $table->index('user');
         });
