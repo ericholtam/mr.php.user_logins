@@ -1,4 +1,4 @@
-#!/usr/local/munkireport/munkireport-python2
+#!/usr/local/munkireport/munkireport-python3
 """
 Parse user sessions on macOS so we can determine what users logged in and
 when the event took place. We only obtain 'console' and 'ssh' sessions as
@@ -91,7 +91,7 @@ def fast_last(session='gui_ssh'):
             events.append(event)
     # finish
     endutxent_wtmp()
-    user_logins =  {v['user']:v for v in events}.values()
+    user_logins =  list({v['user']:v for v in events}.values())
     return user_logins
     
 def main():
@@ -104,7 +104,7 @@ def main():
     # Skip manual check
     if len(sys.argv) > 1:
         if sys.argv[1] == 'manualcheck':
-            print 'Manual check: skipping'
+            print('Manual check: skipping')
             exit(0)
 
     # Get results
@@ -112,7 +112,11 @@ def main():
 
     # Write user session results to cache
     output_plist = os.path.join(cachedir, 'user_logins.plist')
-    plistlib.writePlist(result, output_plist)
+    try:
+        plistlib.writePlist(result, output_plist)
+    except:
+        with open(output_plist, 'wb') as fp:
+            plistlib.dump(result, fp, fmt=plistlib.FMT_XML)
 
 
 if __name__ == "__main__":
